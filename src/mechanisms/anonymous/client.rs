@@ -49,7 +49,7 @@ mod tests {
     }
 
     fn test_token(token: Option<&'static str>, output: &[u8]) {
-        let config = test::server_config(C { token });
+        let config = test::server_config(Box::new(C { token }));
         let mut session = test::client_session(config, &super::super::mechinfo::ANONYMOUS);
         let mut out = Cursor::new(Vec::new());
 

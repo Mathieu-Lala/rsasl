@@ -107,8 +107,8 @@ mod instance {
             unsafe { core::mem::transmute(arc) }
         }
 
-        pub(crate) fn new<CB: SessionCallback + 'static>(
-            callback: CB,
+        pub(crate) fn new(
+            callback: Box<dyn SessionCallback>,
             sorter: SorterFn,
             mechanisms: Registry,
         ) -> Result<Arc<Self>, SASLError> {
@@ -173,7 +173,7 @@ mod instance {
             Self::builder()
                 .with_credentials_mechanisms(has_authzid)
                 .with_defaults()
-                .with_callback(callback)
+                .with_callback(Box::new(callback))
         }
     }
 
@@ -194,13 +194,13 @@ mod instance {
     #[allow(clippy::unnecessary_wraps)]
     #[cfg(any(feature = "config_builder", feature = "testutils"))]
     impl Inner {
-        pub(crate) fn new<CB: SessionCallback + 'static>(
-            callback: CB,
+        pub(crate) fn new(
+            callback: Box<dyn SessionCallback>,
             sorter: SorterFn,
             mechanisms: Registry,
         ) -> Result<Self, SASLError> {
             Ok(Self {
-                callback: Box::new(callback),
+                callback,
                 sorter,
                 mechanisms,
             })

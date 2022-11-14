@@ -115,11 +115,11 @@ pub fn main() {
 
     let config = SASLConfig::builder()
         .with_defaults()
-        .with_callback(OurCallback {
+        .with_callback(Box::new(OurCallback {
             salt,
             server_key,
             stored_key,
-        })
+        }))
         .unwrap();
     let server = SASLServer::<TestValidation>::new(config);
 

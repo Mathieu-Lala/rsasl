@@ -87,7 +87,7 @@ impl SessionCallback for OurCallback {
 pub fn main() {
     let config = SASLConfig::builder()
         .with_defaults()
-        .with_callback(OurCallback {})
+        .with_callback(Box::new(OurCallback {}))
         .unwrap();
 
     // Authentication exchange 1

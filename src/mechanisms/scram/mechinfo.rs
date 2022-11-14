@@ -169,8 +169,12 @@ mod tests {
 
     fn client_start(supported: &'static [Mechanism], offered: &[&Mechname], expected: &str) {
         let cb = EmptyCallback;
-        let config = SASLConfig::new(cb, default_sorter, Registry::with_mechanisms(supported))
-            .expect("failed to construct sasl config");
+        let config = SASLConfig::new(
+            Box::new(cb),
+            default_sorter,
+            Registry::with_mechanisms(supported),
+        )
+        .expect("failed to construct sasl config");
 
         let client = SASLClient::new(config);
         let session = client

@@ -61,7 +61,7 @@ mod tests {
     }
 
     fn test_token(token: &'static str, input: &[u8]) {
-        let config = test::server_config(C { token });
+        let config = test::server_config(Box::new(C { token }));
         let mut session = test::server_session(config, &super::super::mechinfo::ANONYMOUS);
         let mut out = Cursor::new(Vec::new());
 
@@ -102,7 +102,7 @@ mod tests {
     #[test]
     // `None` input should read as empty token
     fn test_no_input() {
-        let config = test::server_config(C { token: "" });
+        let config = test::server_config(Box::new(C { token: "" }));
         let mut session = test::server_session(config, &super::super::mechinfo::ANONYMOUS);
         let mut out = Cursor::new(Vec::new());
 

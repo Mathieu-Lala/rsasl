@@ -170,9 +170,9 @@ impl ConfigBuilder<WantCallback> {
     /// # Errors
     ///
     /// see [`SASLConfig::new()`]
-    pub fn with_callback<CB: SessionCallback + 'static>(
+    pub fn with_callback(
         self,
-        callback: CB,
+        callback: Box<dyn SessionCallback>,
     ) -> Result<Arc<SASLConfig>, SASLError> {
         SASLConfig::new(callback, self.state.sorter, self.state.mechanisms)
     }

@@ -61,7 +61,7 @@ mod tests {
     }
 
     fn test_token(authzid: &'static str, input: &[u8]) {
-        let config = test::server_config(C { authzid });
+        let config = test::server_config(Box::new(C { authzid }));
         let mut session = test::server_session(config, &super::super::mechinfo::EXTERNAL);
         let mut out = Cursor::new(Vec::new());
 
@@ -100,7 +100,7 @@ mod tests {
     #[test]
     // `None` input should read as empty token
     fn test_no_input() {
-        let config = test::server_config(C::default());
+        let config = test::server_config(Box::new(C::default()));
         let mut session = test::server_session(config, &super::super::mechinfo::EXTERNAL);
         let mut out = Cursor::new(Vec::new());
 

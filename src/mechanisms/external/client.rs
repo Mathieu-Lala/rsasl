@@ -51,7 +51,7 @@ mod tests {
     }
 
     fn test_authzid(authzid: Option<&'static str>, output: &[u8]) {
-        let config = test::server_config(C { authzid });
+        let config = test::server_config(Box::new(C { authzid }));
         let mut session = test::client_session(config, &super::super::mechinfo::EXTERNAL);
         let mut out = Cursor::new(Vec::new());
 

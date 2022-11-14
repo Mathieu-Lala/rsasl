@@ -148,7 +148,7 @@ mod tests {
     fn prepare_session(callback: C<'static>) -> Session {
         // let _authid = "username@host.tld";
         // let _token = "ya29.vF9dft4qmTc2Nvb3RlckBhdHRhdmlzdGEuY29tCg";
-        let config = test::client_config(callback);
+        let config = test::client_config(Box::new(callback));
         test::client_session(config, &super::super::mechinfo::XOAUTH2)
     }
 

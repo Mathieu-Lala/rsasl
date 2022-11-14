@@ -128,11 +128,11 @@ mod tests {
         authid: &'static str,
         password: &'static [u8],
     ) -> Result<(State, Vec<u8>), SessionError> {
-        let config = test::server_config(C {
+        let config = test::server_config(Box::new(C {
             authzid,
             authid,
             password,
-        });
+        }));
         let mut session = test::client_session(config, &super::super::mechinfo::PLAIN);
         let mut out = Cursor::new(Vec::new());
 
